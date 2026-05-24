@@ -1,0 +1,103 @@
+---
+import Project from "../../layouts/Project.astro";
+---
+
+<Project slug="tprm-framework">
+  <p class="lead">
+    Third-party risk is where most security programmes leak. A bank can have
+    perfect internal controls and still suffer a major breach because a vendor
+    handling customer data is compromised.
+  </p>
+
+  <h2>The problem I wanted to solve</h2>
+  <p>
+    After MAS heightened its focus on outsourcing risk, Singapore FSI hiring
+    managers specifically test TPRM knowledge in interviews. Most candidates have
+    a risk register, but very few have produced actual TPRM artefacts. This
+    project deliberately fills that portfolio gap.
+  </p>
+
+  <h2>How I approached it</h2>
+
+  <h3>Policy first</h3>
+  <p>
+    Policy establishes the governance framework everything else operates within.
+    The TPRM policy anchors to <span class="cite">MAS TRM §9</span> and the MAS
+    Outsourcing Guidelines as the regulatory basis, with
+    <span class="cite">ISO 27001 A.5.19–A.5.22</span> providing international
+    standards alignment. It's structured in five sections — purpose and scope,
+    vendor tiering, the five-phase vendor lifecycle, roles and responsibilities,
+    and regulatory references — with a document control table showing version
+    history, approval authority and review cadence. This is what an operational
+    policy looks like, not a templated example.
+  </p>
+
+  <h3>Tiering by materiality</h3>
+  <p>
+    <span class="cite">MAS TRM §9.2.1</span> requires materiality assessment —
+    different vendors get different scrutiny based on how critical they are and how
+    sensitive the data they access. I built a three-tier scheme:
+  </p>
+  <ul>
+    <li><strong>Tier 1</strong> — restricted data access or core platform dependency: annual security assessment, full questionnaire, SOC 2 review, contractual right-to-audit.</li>
+    <li><strong>Tier 2</strong> — confidential data access: annual questionnaire, certificate review, contractual security clauses.</li>
+    <li><strong>Tier 3</strong> — productivity tools, no sensitive data: standard contract review, bi-annual cadence.</li>
+  </ul>
+
+  <h3>A realistic inventory</h3>
+  <p>
+    I built an inventory of 12 fictional vendors representative of a real
+    Singapore fintech — AWS for cloud, Stripe for payments, Okta for identity,
+    GitHub Enterprise for code, plus the usual SaaS tail. Each is classified by
+    tier, with annual spend in SGD, renewal date, certification status and a named
+    risk owner.
+  </p>
+
+  <h3>The questionnaire</h3>
+  <p>
+    The Vendor Risk Assessment Questionnaire is the operational vehicle of the
+    framework — 38 questions across seven domains: governance, information
+    security and data protection, compliance and certifications, business
+    continuity, incident response and breach notification, sub-contractors and
+    supply chain, and right to audit. Each section opens with a paragraph
+    explaining why the questions matter, so vendors understand the rationale rather
+    than feeling interrogated. Metadata fields at the start, attestation page with
+    signatures at the end.
+  </p>
+
+  <h3>Scoring that differentiates</h3>
+  <p>
+    The scoring methodology applies domain weightings — information security and
+    data protection at 25%, the others at 10–15% each. Each question scores 1–5
+    with documented rationale per level. The weighted average produces a final
+    score with an auto-calculated decision: Approve, Approve with Conditions,
+    Conditional/Remediate or Reject.
+  </p>
+  <div class="callout">
+    <span class="section-mark">The real test</span>
+    <p>
+      Does it differentiate? <strong>DataPulse Analytics</strong> (Tier 1, fraud
+      detection — strong SOC 2 Type II, ISO 27001 certified) scores ~4.7 and earns
+      Approve. <strong>SwiftDesk Solutions</strong> (Tier 2, support — solid SOC 2
+      but no ISO 27001, weaker BCP) scores ~3.0 and earns Approve with Conditions.
+      The deliberate spread proves the methodology produces different outcomes for
+      different vendor profiles — which is the whole point.
+    </p>
+  </div>
+
+  <h2>What I produced</h2>
+  <p>
+    A five-sheet Excel workbook containing the methodology, vendor inventory,
+    scoring matrix, dashboard and cover. A Vendor Risk Assessment Questionnaire in
+    Word with seven sections and 38 questions. And a formal TPRM policy in Word
+    covering scope, tiering, lifecycle phases, roles and regulatory references.
+  </p>
+
+  <h2>What this demonstrates</h2>
+  <ul>
+    <li>I understand Singapore's regulatory expectations for vendor risk.</li>
+    <li>I can operationalise TPRM, not just describe it.</li>
+    <li>I think across the full vendor lifecycle — due diligence, contracting, onboarding, monitoring, termination.</li>
+    <li>The policy I wrote would survive MAS inspection, and the scoring actually differentiates vendors.</li>
+  </ul>
+</Project>

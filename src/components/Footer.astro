@@ -1,0 +1,92 @@
+---
+import { site, url } from "../data/site";
+
+const year = new Date().getFullYear();
+const contacts = [
+  site.github ? { label: "GitHub", href: site.github } : null,
+  site.linkedin ? { label: "LinkedIn", href: site.linkedin } : null,
+  site.email ? { label: "Email", href: `mailto:${site.email}` } : null,
+].filter(Boolean) as { label: string; href: string }[];
+---
+
+<footer class="foot">
+  <div class="wrap foot__inner">
+    <div class="foot__brand">
+      <p class="foot__name">{site.name}</p>
+      <p class="foot__role">{site.role} · {site.location}</p>
+    </div>
+    <nav class="foot__links" aria-label="Footer">
+      <a href={url("/")}>Home</a>
+      <a href={url("/frameworks")}>Framework Reference</a>
+      {contacts.map((c) => <a href={c.href}>{c.label}</a>)}
+    </nav>
+  </div>
+  <div class="wrap foot__fine">
+    <p>
+      PayWave Solutions Pte. Ltd., DataPulse Analytics and SwiftDesk Solutions are
+      fictional entities created for this portfolio. All findings, costs and
+      assessments are illustrative. Referenced frameworks (ISO&nbsp;27001,
+      NIST&nbsp;CSF, MAS&nbsp;TRM, PDPA, PCI&nbsp;DSS) are real and publicly
+      accessible.
+    </p>
+    <p class="foot__copy">© {year} {site.name}. Built with Astro.</p>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    margin-top: clamp(4rem, 9vw, 7rem);
+    border-top: 1px solid var(--line);
+    background: color-mix(in srgb, var(--navy) 4%, var(--paper));
+    padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  }
+  .foot__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem 2rem;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .foot__name {
+    font-family: var(--display);
+    font-size: 1.3rem;
+    color: var(--navy);
+  }
+  .foot__role {
+    font-family: var(--mono);
+    font-size: var(--step--1);
+    color: var(--ink-mute);
+    letter-spacing: 0.04em;
+  }
+  .foot__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.4rem;
+  }
+  .foot__links a {
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+  .foot__links a:hover {
+    color: var(--navy);
+  }
+  .foot__fine {
+    margin-top: 2.2rem;
+    padding-top: 1.6rem;
+    border-top: 1px dashed var(--line-strong);
+    display: grid;
+    gap: 0.8rem;
+  }
+  .foot__fine p {
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: var(--ink-mute);
+    max-width: 75ch;
+  }
+  .foot__copy {
+    font-family: var(--mono);
+    letter-spacing: 0.03em;
+  }
+</style>

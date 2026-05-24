@@ -1,0 +1,149 @@
+---
+import type { Project } from "../data/projects";
+import { url } from "../data/site";
+
+interface Props {
+  project: Project;
+}
+const { project } = Astro.props;
+const href = url(`/projects/${project.slug}`);
+---
+
+<article class={`pcard pcard--${project.accent} reveal`}>
+  <a class="pcard__link" href={href} aria-label={project.title}></a>
+  <div class="pcard__head">
+    <span class="pcard__num">{project.num}</span>
+    <span class="pcard__kicker">{project.kicker}</span>
+  </div>
+  <h3 class="pcard__title">{project.title}</h3>
+  <p class="pcard__blurb">{project.blurb}</p>
+
+  <dl class="pcard__metrics">
+    {
+      project.metrics.map((m) => (
+        <div>
+          <dt>{m.value}</dt>
+          <dd>{m.label}</dd>
+        </div>
+      ))
+    }
+  </dl>
+
+  <div class="cite-row pcard__cites">
+    {project.clauses.slice(0, 4).map((c) => <span class="cite">{c}</span>)}
+  </div>
+
+  <span class="pcard__more">
+    Read the approach
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </span>
+</article>
+
+<style>
+  .pcard {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--c, var(--navy));
+    border-radius: var(--radius);
+    padding: clamp(1.4rem, 3vw, 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .pcard--critical {
+    --c: var(--risk-critical);
+  }
+  .pcard--high {
+    --c: var(--risk-high);
+  }
+  .pcard--medium {
+    --c: var(--risk-medium);
+  }
+  .pcard--low {
+    --c: var(--risk-low);
+  }
+  .pcard:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lift);
+  }
+  .pcard__link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .pcard__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .pcard__num {
+    font-family: var(--display);
+    font-size: 2.4rem;
+    line-height: 1;
+    color: var(--c, var(--navy));
+    font-variation-settings: "opsz" 120, "wght" 500;
+  }
+  .pcard__kicker {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .pcard__title {
+    font-size: var(--step-1);
+    line-height: 1.15;
+  }
+  .pcard__blurb {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .pcard__metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+    margin: 0;
+    padding-block: 0.8rem;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .pcard__metrics div {
+    text-align: left;
+  }
+  .pcard__metrics dt {
+    font-family: var(--display);
+    font-size: 1.45rem;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .pcard__metrics dd {
+    font-size: 0.7rem;
+    color: var(--ink-mute);
+    margin-top: 0.3rem;
+    line-height: 1.3;
+  }
+  .pcard__more {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .pcard__more svg {
+    width: 1.05em;
+    height: 1.05em;
+    transition: transform 0.2s ease;
+  }
+  .pcard:hover .pcard__more svg {
+    transform: translateX(4px);
+  }
+</style>

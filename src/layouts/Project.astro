@@ -1,0 +1,390 @@
+---
+import Base from "./Base.astro";
+import { projects } from "../data/projects";
+import { url } from "../data/site";
+
+interface Props {
+  slug: string;
+  title?: string;
+  description?: string;
+}
+const { slug, title, description } = Astro.props;
+
+const idx = projects.findIndex((p) => p.slug === slug);
+const project = projects[idx];
+const prev = projects[(idx - 1 + projects.length) % projects.length];
+const next = projects[(idx + 1) % projects.length];
+
+const kindLabel = (k: string) => (k === "xlsx" ? "Excel workbook" : "Word document");
+---
+
+<Base title={title ?? project.title} description={description ?? project.blurb}>
+  <article>
+    <!-- header -->
+    <header class={`phead phead--${project.accent}`}>
+      <div class="wrap">
+        <a class="phead__back" href={url("/#projects")}>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          All projects
+        </a>
+        <div class="phead__top">
+          <span class="phead__num">{project.num}</span>
+          <span class="section-mark">{project.kicker}</span>
+        </div>
+        <h1 class="phead__title">{project.title}</h1>
+        <p class="phead__blurb">{project.blurb}</p>
+
+        <div class="cite-row phead__cites">
+          {project.clauses.map((c) => <span class="cite">{c}</span>)}
+        </div>
+
+        <dl class="phead__metrics">
+          {project.metrics.map((m) => (
+            <div>
+              <dt>{m.value}</dt>
+              <dd>{m.label}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </header>
+
+    <!-- narrative body -->
+    <div class="wrap pbody">
+      <div class="prose">
+        <slot />
+      </div>
+
+      <!-- downloads -->
+      <aside class="downloads" aria-label="Downloadable artefacts">
+        <span class="section-mark">Download the artefacts</span>
+        <div class="downloads__grid">
+          {project.downloads.map((d) => (
+            <a class="dl" href={url(`/downloads/${d.file}`)} download>
+              <span class={`dl__icon dl__icon--${d.kind}`}>{d.kind === "xlsx" ? "XLS" : "DOC"}</span>
+              <span class="dl__body">
+                <span class="dl__label">{d.label}</span>
+                <span class="dl__detail">{d.detail}</span>
+                <span class="dl__kind">{kindLabel(d.kind)}</span>
+              </span>
+              <svg class="dl__arrow" viewBox="0 0 24 24" fill="none"><path d="M12 4v12m0 0 5-5m-5 5-5-5M5 20h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          ))}
+        </div>
+        <p class="downloads__note">
+          Fictional scenario — for portfolio demonstration only.
+        </p>
+      </aside>
+    </div>
+
+    <!-- prev / next -->
+    <nav class="pnav wrap" aria-label="More projects">
+      <a class="pnav__item pnav__item--prev" href={url(`/projects/${prev.slug}`)}>
+        <span class="pnav__dir">← Previous</span>
+        <span class="pnav__title">{prev.num} · {prev.title}</span>
+      </a>
+      <a class="pnav__item pnav__item--next" href={url(`/projects/${next.slug}`)}>
+        <span class="pnav__dir">Next →</span>
+        <span class="pnav__title">{next.num} · {next.title}</span>
+      </a>
+    </nav>
+  </article>
+</Base>
+
+<style>
+  /* ---- header ---- */
+  .phead {
+    --c: var(--navy);
+    padding-block: clamp(2rem, 5vw, 3.5rem) clamp(2rem, 4vw, 3rem);
+    border-bottom: 1px solid var(--line);
+    background: color-mix(in srgb, var(--c) 6%, var(--paper));
+    position: relative;
+  }
+  .phead::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 4px;
+    background: var(--c);
+  }
+  .phead--critical { --c: var(--risk-critical); }
+  .phead--high { --c: var(--risk-high); }
+  .phead--medium { --c: var(--risk-medium); }
+  .phead--low { --c: var(--risk-low); }
+
+  .phead__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--ink-soft);
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+  }
+  .phead__back svg {
+    width: 1em;
+    height: 1em;
+  }
+  .phead__back:hover {
+    color: var(--navy);
+  }
+  .phead__top {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+  }
+  .phead__num {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    line-height: 1;
+    color: var(--c);
+    font-variation-settings: "opsz" 144, "wght" 500;
+  }
+  .phead__title {
+    font-size: var(--step-4);
+    margin-top: 0.6rem;
+    max-width: 20ch;
+  }
+  .phead__blurb {
+    margin-top: 1.2rem;
+    font-size: var(--step-1);
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 60ch;
+  }
+  .phead__cites {
+    margin-top: 1.5rem;
+  }
+  .phead__metrics {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .phead__metrics dt {
+    font-family: var(--display);
+    font-size: 2rem;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .phead__metrics dd {
+    font-size: 0.74rem;
+    color: var(--ink-mute);
+    margin-top: 0.35rem;
+  }
+
+  /* ---- body layout ---- */
+  .pbody {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+    padding-block: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  /* ---- prose ---- */
+  .prose :global(h2) {
+    font-size: var(--step-2);
+    margin-top: 2.6rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--line);
+  }
+  .prose :global(h2:first-child) {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+  .prose :global(h3) {
+    font-size: var(--step-1);
+    color: var(--brass-deep);
+    margin-top: 2rem;
+  }
+  .prose :global(p) {
+    margin-top: 1.1rem;
+    color: var(--ink-soft);
+    line-height: 1.72;
+  }
+  .prose :global(p.lead) {
+    font-size: var(--step-1);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .prose :global(strong) {
+    color: var(--navy);
+  }
+  .prose :global(ul) {
+    margin-top: 1.1rem;
+    padding-left: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .prose :global(li) {
+    position: relative;
+    padding-left: 1.6rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .prose :global(li::before) {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--brass);
+    border-radius: 1px;
+    transform: rotate(45deg);
+  }
+  .prose :global(.callout) {
+    margin-top: 1.8rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--brass);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.4rem;
+  }
+  .prose :global(.callout .section-mark) {
+    margin-bottom: 0.6rem;
+  }
+  .prose :global(.callout p) {
+    margin-top: 0;
+    color: var(--ink);
+  }
+
+  /* ---- downloads ---- */
+  .downloads {
+    position: sticky;
+    top: 5rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.4rem;
+    box-shadow: var(--shadow);
+  }
+  .downloads__grid {
+    display: grid;
+    gap: 0.7rem;
+    margin-top: 1.1rem;
+  }
+  .dl {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.85rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--paper);
+    transition: border-color 0.18s ease, transform 0.18s ease;
+  }
+  .dl:hover {
+    border-color: var(--navy);
+    transform: translateY(-2px);
+  }
+  .dl__icon {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #fff;
+    padding: 0.5rem 0.4rem;
+    border-radius: 3px;
+  }
+  .dl__icon--xlsx { background: var(--risk-low); }
+  .dl__icon--docx { background: var(--blue); }
+  .dl__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .dl__label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--navy);
+  }
+  .dl__detail {
+    font-size: 0.72rem;
+    color: var(--ink-mute);
+    line-height: 1.35;
+  }
+  .dl__kind {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-top: 0.15rem;
+  }
+  .dl__arrow {
+    width: 1.05rem;
+    height: 1.05rem;
+    color: var(--brass);
+  }
+  .downloads__note {
+    margin-top: 1rem;
+    font-size: 0.7rem;
+    color: var(--ink-mute);
+    font-style: italic;
+  }
+
+  /* ---- prev/next ---- */
+  .pnav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding-bottom: 1rem;
+  }
+  .pnav__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding: 1.2rem 1.4rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--card);
+    text-decoration: none;
+    transition: border-color 0.18s ease, transform 0.18s ease;
+  }
+  .pnav__item--next {
+    text-align: right;
+  }
+  .pnav__item:hover {
+    border-color: var(--navy);
+    transform: translateY(-2px);
+  }
+  .pnav__dir {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .pnav__title {
+    font-family: var(--display);
+    font-size: 1.05rem;
+    color: var(--navy);
+  }
+
+  @media (max-width: 880px) {
+    .pbody {
+      grid-template-columns: 1fr;
+    }
+    .downloads {
+      position: static;
+    }
+  }
+  @media (max-width: 520px) {
+    .pnav {
+      grid-template-columns: 1fr;
+    }
+    .pnav__item--next {
+      text-align: left;
+    }
+  }
+</style>

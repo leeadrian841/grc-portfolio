@@ -1,0 +1,124 @@
+---
+import { site, url } from "../data/site";
+
+const links = [
+  { href: url("/#projects"), label: "Projects" },
+  { href: url("/#scenario"), label: "The Scenario" },
+  { href: url("/frameworks"), label: "Frameworks" },
+  { href: url("/#contact"), label: "Contact" },
+];
+---
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href={url("/")} aria-label="Home">
+      <span class="brand__mark" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </span>
+      <span class="brand__text">
+        <span class="brand__name">{site.name}</span>
+        <span class="brand__role">GRC Portfolio</span>
+      </span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--paper) 82%, transparent);
+    backdrop-filter: saturate(1.1) blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.7rem;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .brand__mark {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    width: 22px;
+    height: 22px;
+    flex: none;
+  }
+  .brand__mark span {
+    border-radius: 1px;
+  }
+  .brand__mark span:nth-child(1) {
+    background: var(--risk-low);
+  }
+  .brand__mark span:nth-child(2) {
+    background: var(--risk-medium);
+  }
+  .brand__mark span:nth-child(3) {
+    background: var(--navy);
+  }
+  .brand__mark span:nth-child(4) {
+    background: var(--risk-critical);
+  }
+  .brand__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+  .brand__name {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1.05rem;
+    color: var(--navy);
+  }
+  .brand__role {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .nav__links {
+    display: flex;
+    gap: clamp(0.9rem, 2vw, 1.9rem);
+    align-items: center;
+  }
+  .nav__links a {
+    font-size: var(--step--1);
+    font-weight: 500;
+    color: var(--ink-soft);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+  .nav__links a:hover {
+    color: var(--navy);
+  }
+  @media (max-width: 620px) {
+    .brand__role {
+      display: none;
+    }
+    .nav__links a:nth-child(2) {
+      display: none;
+    }
+  }
+  @media (max-width: 440px) {
+    .nav__links {
+      gap: 0.9rem;
+    }
+    .nav__links a:nth-child(3) {
+      display: none;
+    }
+  }
+</style>

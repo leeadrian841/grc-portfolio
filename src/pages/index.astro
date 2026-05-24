@@ -1,0 +1,494 @@
+---
+import Base from "../layouts/Base.astro";
+import HeatMap from "../components/HeatMap.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { projects } from "../data/projects";
+import { site, url } from "../data/site";
+
+const facts = [
+  { k: "Industry", v: "Financial technology — digital payments" },
+  { k: "Headquarters", v: "Singapore · One-North Business Park" },
+  { k: "Scale", v: "~120 staff · 80 engineering, 40 corporate" },
+  { k: "Platform", v: "Payments engine, mobile app, merchant portal" },
+  { k: "Cloud", v: "AWS — Singapore primary, Tokyo DR" },
+  { k: "Regulatory", v: "MAS TRM · MAS Outsourcing · PDPA · PCI DSS" },
+];
+
+const contacts = [
+  site.github ? { label: "GitHub", href: site.github, sub: "Source & artefacts" } : null,
+  site.linkedin ? { label: "LinkedIn", href: site.linkedin, sub: "Professional profile" } : null,
+  site.email ? { label: "Email", href: `mailto:${site.email}`, sub: site.email } : null,
+].filter(Boolean) as { label: string; href: string; sub: string }[];
+---
+
+<Base>
+  <!-- ============================ HERO ============================ -->
+  <section class="hero">
+    <div class="wrap hero__inner">
+      <div class="hero__text">
+        <p class="eyebrow reveal">GRC Portfolio · Singapore Financial Services</p>
+        <h1 class="hero__title reveal">
+          Governance, risk &amp; compliance — built as <em>evidence</em>, not theory.
+        </h1>
+        <p class="hero__lead reveal">
+          I'm moving from IT project engineering into a GRC analyst role in
+          cybersecurity. Rather than certificates alone, this is the working
+          proof: three integrated artefacts built around one fictional Singapore
+          fintech, each anchored to a specific regulatory clause.
+        </p>
+        <div class="hero__cta reveal">
+          <a class="btn btn-primary" href="#projects">
+            View the projects
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn-ghost" href={url("/frameworks")}>Framework reference</a>
+        </div>
+        <dl class="hero__stats reveal">
+          <div><dt>3</dt><dd>Integrated projects</dd></div>
+          <div><dt>7</dt><dd>Downloadable artefacts</dd></div>
+          <div><dt>1</dt><dd>Continuous ISMS</dd></div>
+        </dl>
+      </div>
+
+      <aside class="hero__aside reveal" aria-label="Residual risk heat map preview">
+        <div class="hero__asideHead">
+          <span class="section-mark">Risk register · residual</span>
+        </div>
+        <HeatMap />
+        <p class="hero__asideNote">
+          The 5×5 matrix from Project 02 — likelihood against four-dimension
+          impact, plotting residual scores after existing controls.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ========================== SCENARIO ========================== -->
+  <section id="scenario" class="sec">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <span class="section-mark">The scenario</span>
+        <h2>One fictional company, deliberately chosen.</h2>
+      </div>
+      <div class="scenario">
+        <div class="scenario__copy stack reveal">
+          <p>
+            <strong>PayWave Solutions Pte. Ltd.</strong> is a fictional Singapore
+            fintech I created for this portfolio. The choice was deliberate: small
+            enough to scope realistically, but a payments platform is one of the
+            most heavily regulated entity types in Singapore — which forces every
+            artefact to engage with real frameworks rather than generic global
+            checklists.
+          </p>
+          <p>
+            Each project reuses this same scenario. The gap analysis finds the
+            weaknesses, the risk register quantifies what they could cost, and the
+            TPRM framework manages the supplier dimension. Read in sequence, they
+            form one continuous information security management system — not three
+            isolated documents.
+          </p>
+          <div class="cite-row">
+            <span class="cite">MAS TRM</span>
+            <span class="cite">MAS Outsourcing</span>
+            <span class="cite">PDPA §26B</span>
+            <span class="cite">PCI DSS</span>
+            <span class="cite">ISO 27001:2022</span>
+          </div>
+        </div>
+        <aside class="spec reveal" aria-label="Company profile">
+          <div class="spec__top">
+            <span class="spec__tag">Fictional · for demonstration</span>
+            <h3 class="spec__name">PayWave Solutions</h3>
+            <span class="spec__sub">Pte. Ltd. — digital payments</span>
+          </div>
+          <dl class="spec__list">
+            {facts.map((f) => (
+              <div class="spec__row">
+                <dt>{f.k}</dt>
+                <dd>{f.v}</dd>
+              </div>
+            ))}
+          </dl>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================== PROJECTS ========================== -->
+  <section id="projects" class="sec sec--alt">
+    <div class="wrap">
+      <div class="sec__head reveal">
+        <span class="section-mark">The work · three lenses</span>
+        <h2>Compliance, threat, and supplier risk.</h2>
+        <p class="sec__intro">
+          Three projects on the same company, each looking at security through a
+          different lens. The findings flow between them — a gap becomes a risk
+          becomes a treatment action becomes a vendor control.
+        </p>
+      </div>
+      <div class="pgrid">
+        {projects.map((p) => <ProjectCard project={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== INTEGRATION ========================= -->
+  <section class="sec">
+    <div class="wrap">
+      <blockquote class="pull reveal">
+        <p>
+          What a hiring manager should see across these three projects is not
+          three templates — it's <em>one way of thinking</em>. The Singapore
+          regulatory overlay is deliberate. The cross-referencing is deliberate.
+          Every artefact is anchored to a clause I can cite on demand.
+        </p>
+      </blockquote>
+      <div class="flow reveal" aria-label="How the projects connect">
+        <div class="flow__step">
+          <span class="flow__lbl risk-badge risk-high">Gap</span>
+          <p>A weakness under ISO 27001 Clause 6.1.3</p>
+        </div>
+        <span class="flow__arrow" aria-hidden="true">→</span>
+        <div class="flow__step">
+          <span class="flow__lbl risk-badge risk-critical">Risk</span>
+          <p>Becomes a scored vulnerability in the register</p>
+        </div>
+        <span class="flow__arrow" aria-hidden="true">→</span>
+        <div class="flow__step">
+          <span class="flow__lbl risk-badge risk-medium">Treatment</span>
+          <p>Becomes a funded action with an owner</p>
+        </div>
+        <span class="flow__arrow" aria-hidden="true">→</span>
+        <div class="flow__step">
+          <span class="flow__lbl risk-badge risk-low">Roadmap</span>
+          <p>Becomes a milestone on the remediation plan</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================== CONTACT =========================== -->
+  <section id="contact" class="sec sec--cta">
+    <div class="wrap cta">
+      <div class="cta__text reveal">
+        <span class="section-mark">Contact</span>
+        <h2>Let's talk about the work.</h2>
+        <p>
+          I'm targeting GRC analyst roles with Singapore FSIs, Big&nbsp;4 firms and
+          MNCs. Happy to walk through any artefact — including the methodology
+          behind any single risk score — in an interview.
+        </p>
+      </div>
+      <div class="cta__links reveal">
+        {contacts.map((c) => (
+          <a class="cta__link" href={c.href}>
+            <span class="cta__label">{c.label}</span>
+            <span class="cta__sub">{c.sub}</span>
+            <svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ---- hero ---- */
+  .hero {
+    padding-block: clamp(3rem, 7vw, 6rem) clamp(2.5rem, 6vw, 5rem);
+    position: relative;
+  }
+  .hero__inner {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+  .hero__title {
+    font-size: var(--step-5);
+    margin-top: 1rem;
+    font-variation-settings: "opsz" 144, "wght" 480, "SOFT" 0;
+  }
+  .hero__title em {
+    font-style: italic;
+    color: var(--brass-deep);
+    font-variation-settings: "opsz" 144, "wght" 480, "SOFT" 30;
+  }
+  .hero__lead {
+    margin-top: 1.6rem;
+    font-size: var(--step-1);
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 56ch;
+  }
+  .hero__cta {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+  .hero__stats {
+    margin-top: 2.6rem;
+    display: flex;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--line);
+  }
+  .hero__stats dt {
+    font-family: var(--display);
+    font-size: 2.2rem;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .hero__stats dd {
+    font-size: 0.72rem;
+    color: var(--ink-mute);
+    margin-top: 0.35rem;
+    letter-spacing: 0.02em;
+  }
+  .hero__aside {
+    align-self: stretch;
+  }
+  .hero__asideHead {
+    margin-bottom: 0.9rem;
+  }
+  .hero__asideNote {
+    font-size: 0.78rem;
+    color: var(--ink-mute);
+    line-height: 1.5;
+    margin-top: 1rem;
+    max-width: 42ch;
+  }
+
+  /* ---- generic section ---- */
+  .sec {
+    padding-block: clamp(3rem, 7vw, 6rem);
+  }
+  .sec--alt {
+    background: color-mix(in srgb, var(--navy) 4%, transparent);
+    border-block: 1px solid var(--line);
+  }
+  .sec__head {
+    max-width: 60ch;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+  .sec__head h2 {
+    margin-top: 0.9rem;
+  }
+  .sec__intro {
+    margin-top: 1rem;
+    color: var(--ink-soft);
+    font-size: var(--step-1);
+    line-height: 1.55;
+  }
+
+  /* ---- scenario ---- */
+  .scenario {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+  .scenario__copy p {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+  }
+  .scenario__copy .cite-row {
+    margin-top: 1.6rem;
+  }
+  .spec {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .spec__top {
+    background: var(--navy);
+    color: var(--paper);
+    padding: 1.4rem 1.5rem;
+  }
+  .spec__tag {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--paper) 70%, var(--blue));
+  }
+  .spec__name {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+  }
+  .spec__sub {
+    font-size: 0.8rem;
+    color: color-mix(in srgb, var(--paper) 75%, transparent);
+  }
+  .spec__list {
+    margin: 0;
+  }
+  .spec__row {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 1rem;
+    padding: 0.85rem 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .spec__row dt {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    padding-top: 0.15rem;
+  }
+  .spec__row dd {
+    margin: 0;
+    font-size: 0.86rem;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+
+  /* ---- projects grid ---- */
+  .pgrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+  }
+
+  /* ---- pull quote ---- */
+  .pull {
+    margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+    max-width: 30ch;
+    border: 0;
+  }
+  .pull p {
+    font-family: var(--display);
+    font-size: var(--step-3);
+    line-height: 1.18;
+    color: var(--navy);
+    text-align: center;
+    max-width: 24ch;
+    margin-inline: auto;
+    text-wrap: balance;
+  }
+  .pull em {
+    font-style: italic;
+    color: var(--brass-deep);
+  }
+
+  /* ---- flow ---- */
+  .flow {
+    display: flex;
+    align-items: stretch;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .flow__step {
+    flex: 1 1 180px;
+    max-width: 240px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.1rem;
+    box-shadow: var(--shadow);
+  }
+  .flow__step p {
+    margin-top: 0.7rem;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+  .flow__arrow {
+    align-self: center;
+    color: var(--line-strong);
+    font-size: 1.4rem;
+  }
+
+  /* ---- cta ---- */
+  .sec--cta {
+    background: color-mix(in srgb, var(--navy) 4%, transparent);
+    border-top: 1px solid var(--line);
+  }
+  .cta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+  }
+  .cta__text h2 {
+    margin-top: 0.8rem;
+  }
+  .cta__text p {
+    margin-top: 1rem;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    max-width: 48ch;
+  }
+  .cta__links {
+    display: grid;
+    gap: 0.7rem;
+  }
+  .cta__link {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.3rem 1rem;
+    padding: 1.05rem 1.3rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color 0.18s ease, transform 0.18s ease;
+  }
+  .cta__link:hover {
+    border-color: var(--navy);
+    transform: translateX(3px);
+  }
+  .cta__label {
+    font-weight: 600;
+    color: var(--navy);
+    grid-row: 1;
+  }
+  .cta__sub {
+    grid-column: 1 / 3;
+    grid-row: 2;
+    font-size: 0.76rem;
+    color: var(--ink-mute);
+    font-family: var(--mono);
+  }
+  .cta__link svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    color: var(--brass);
+    grid-column: 3;
+    grid-row: 1 / 3;
+  }
+
+  /* ---- responsive ---- */
+  @media (max-width: 940px) {
+    .hero__inner,
+    .scenario,
+    .cta {
+      grid-template-columns: 1fr;
+    }
+    .hero__aside {
+      max-width: 460px;
+    }
+    .pgrid {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 680px) {
+    .flow__arrow {
+      transform: rotate(90deg);
+      width: 100%;
+      text-align: center;
+    }
+    .flow__step {
+      max-width: none;
+    }
+  }
+</style>

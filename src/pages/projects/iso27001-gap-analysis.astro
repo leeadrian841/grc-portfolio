@@ -1,0 +1,102 @@
+---
+import Project from "../../layouts/Project.astro";
+---
+
+<Project slug="iso27001-gap-analysis">
+  <p class="lead">
+    Most ISO 27001 gap analysis templates jump straight to the 93 Annex A
+    controls. That misses what the standard actually requires — and what an
+    external certification auditor would look for first.
+  </p>
+
+  <h2>The problem I wanted to solve</h2>
+  <p>
+    ISO 27001 is a management system standard. Clauses 4 through 10 define the
+    governance backbone that makes the controls work. A gap analysis that ignores
+    these clauses produces a tidy spreadsheet but tells you very little about
+    whether the organisation can actually operate an ISMS. I wanted to build a gap
+    analysis that an external certification auditor would recognise as
+    professional work — not a checklist.
+  </p>
+
+  <h2>How I approached it</h2>
+
+  <h3>Scope first</h3>
+  <p>
+    <strong>Clause 4.3</strong> mandates that you define the boundaries of your
+    ISMS before doing anything else. For PayWave I scoped the digital payment
+    platform, mobile app, merchant portal and supporting IT infrastructure at the
+    One-North office, and explicitly excluded the marketing systems and the
+    staging environment with documented justification. Scope sounds bureaucratic,
+    but it drives every subsequent decision about which controls apply and what
+    evidence is needed.
+  </p>
+
+  <h3>Then the management clauses</h3>
+  <p>
+    I worked through Clauses 4 to 10, assessing what PayWave had in place and
+    where it fell short. Clause&nbsp;4 (Context) — partial: a scope statement
+    exists but no formal context analysis. Clause&nbsp;5 (Leadership) — partial: a
+    CISO is in place but no board reporting cadence. Clause&nbsp;6 (Planning) —
+    gap: no documented risk assessment methodology.
+  </p>
+  <div class="callout">
+    <span class="section-mark">Why this matters</span>
+    <p>
+      That last finding — no documented methodology under
+      <span class="cite">ISO 27001 §6.1.2</span> — directly drove my second
+      portfolio project. The risk register exists because this clause requires it.
+      The artefacts cross-reference each other by design.
+    </p>
+  </div>
+
+  <h3>Annex A, sampled deliberately</h3>
+  <p>
+    Only then did I move to Annex A. I sampled 26 controls across all four themes
+    (Organisational, People, Physical, Technological) — enough to demonstrate
+    methodology without producing an unreadable document. For each control I
+    assessed implementation status, assigned a 1–5 maturity score against a
+    defined model, collected evidence references and documented the specific gap.
+    Generic findings like "needs improvement" are useless; I wrote findings like
+    "No EDR on endpoints; CloudWatch monitors infrastructure only; no behavioural
+    analysis."
+  </p>
+
+  <h3>The Statement of Applicability</h3>
+  <p>
+    This is where I spent the most time. <strong>Clause 6.1.3(d)</strong> requires
+    the SoA as a mandatory document, and auditors examine it line by line. For
+    every control I wrote a justification grounded in specific regulatory
+    references — not generic "compliance" language. For A.5.3 (Segregation of
+    duties) my justification reads: "Required: critical for payment processing
+    integrity. <span class="cite">PCI DSS Req 6.4</span> and
+    <span class="cite">MAS TRM §9.2</span>." That level of citation is what
+    separates a professional SoA from a templated one.
+  </p>
+
+  <h3>A phased remediation roadmap</h3>
+  <p>
+    Finally I produced a remediation roadmap with named owners, deadlines,
+    measurable KPIs and budget estimates in Singapore dollars. This is where my
+    project engineering background showed — I'm comfortable presenting a phased
+    plan with dependencies and resource requirements that survives stakeholder
+    scrutiny.
+  </p>
+
+  <h2>What I produced</h2>
+  <p>
+    A five-sheet Excel workbook covering the cover page, dashboard with
+    auto-calculated metrics, gap analysis matrix, Statement of Applicability and
+    risk register. Alongside it, a Word document containing a 12-month remediation
+    roadmap with 22 specific actions, governance mechanisms and a SGD
+    180,000–270,000 first-year budget estimate.
+  </p>
+
+  <h2>What this demonstrates</h2>
+  <ul>
+    <li>I understand ISO 27001 as a management system, not a checklist.</li>
+    <li>I can apply an international standard within the Singapore regulatory context.</li>
+    <li>I produce evidence-quality artefacts that would survive auditor scrutiny.</li>
+    <li>The phased roadmap with budgets and named owners signals operational maturity.</li>
+  </ul>
+</Project>

@@ -1,0 +1,21 @@
+{
+  "name": "grc-portfolio",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GRC portfolio website — PayWave Solutions scenario (ISO 27001, cyber risk, TPRM).",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.2",
+    "@fontsource-variable/fraunces": "^5.1.0",
+    "@fontsource/ibm-plex-mono": "^5.1.0",
+    "@fontsource/ibm-plex-sans": "^5.1.0",
+    "astro": "^6.3.7"
+  }
+}

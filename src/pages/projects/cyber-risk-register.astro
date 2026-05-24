@@ -1,0 +1,103 @@
+---
+import Project from "../../layouts/Project.astro";
+---
+
+<Project slug="cyber-risk-register">
+  <p class="lead">
+    A gap analysis tells you what's missing. It doesn't tell you what could
+    actually hurt the organisation. The risk register is the engine that
+    translates gaps into prioritised, funded action.
+  </p>
+
+  <h2>The problem I wanted to solve</h2>
+  <p>
+    With 18 partially implemented controls, which one matters most? The risk
+    register is the artefact most candidates either skip entirely or produce as a
+    vague worry list. I wanted to build one with the methodological rigour that
+    would survive an interviewer's deepest probe — "walk me through how you
+    assessed this specific risk."
+  </p>
+
+  <h2>How I approached it</h2>
+
+  <h3>Methodology before any risk</h3>
+  <p>
+    Before identifying a single risk I built the risk assessment methodology
+    document. This is required by <span class="cite">ISO 27001 §6.1.2</span> and
+    <span class="cite">ISO 27005</span>, but more importantly it's what auditors
+    and interviewers test hardest. Without a documented methodology, every risk
+    score is just an opinion.
+  </p>
+  <p>
+    I built a five-by-five likelihood–impact matrix — never three-by-three,
+    because three-by-three is too coarse to differentiate risks and is rejected by
+    FSI risk frameworks. The likelihood scale anchors qualitative descriptions to
+    frequency benchmarks so different assessors arrive at the same score. The
+    impact scale spans four dimensions: financial (SGD thresholds), operational
+    (disruption duration), regulatory (MAS enforcement, PDPA fines) and
+    reputational (media, churn). The risk appetite statement explicitly prohibits
+    accepting Critical risks for a MAS-regulated entity.
+  </p>
+
+  <h3>Completeness through NIST CSF</h3>
+  <p>
+    I identified 16 cyber risks across all five NIST CSF functions — Identify,
+    Protect, Detect, Respond and Recover. The function mapping ensures
+    completeness: if I'd identified 15 Protect risks and zero Detect risks, I'd
+    have missed an entire functional domain. When an interviewer asks "how did you
+    ensure comprehensiveness?", the CSF distribution is the answer.
+  </p>
+
+  <h3>Four-part decomposition</h3>
+  <p>
+    For each risk I decomposed it into threat source, threat action, vulnerability
+    and asset at risk. This is what separates a professional register from a
+    brainstormed list of concerns. The vulnerability column references findings
+    from my gap analysis directly — so the artefacts cross-reference each other.
+  </p>
+
+  <h3>Inherent vs residual scoring</h3>
+  <p>
+    Scoring was formula-driven. I calculated both inherent risk (without controls)
+    and residual risk (with existing controls). The gap between the two reveals
+    how effective current controls actually are.
+  </p>
+  <div class="callout">
+    <span class="section-mark">A worked example</span>
+    <p>
+      <strong>CRR-002 (ransomware)</strong> has inherent score 20 and residual
+      score 20 — telling me the controls are barely moving the needle.
+      <strong>CRR-001 (privileged access abuse)</strong> drops from inherent 20 to
+      residual 12 — controls help, but are insufficient. That delta is the
+      conversation I want to have with management.
+    </p>
+  </div>
+
+  <h3>Heat map and treatment plan</h3>
+  <p>
+    The 5×5 heat map plots all 16 risks by residual score — the single most
+    important visual in the artefact, because it communicates the entire risk
+    posture in ten seconds. The treatment plan documents 15 specific actions, each
+    with a single named owner (not a team), a target month (not a quarter), an SGD
+    cost estimate and a measurable KPI. "Improve endpoint security" is not a
+    treatment action. "Deploy CrowdStrike Falcon EDR on all 120 endpoints,
+    integrate with Microsoft Sentinel SIEM, MTTD target under 15 minutes" is.
+  </p>
+
+  <h2>What I produced</h2>
+  <p>
+    A five-sheet Excel workbook with the risk methodology, full register of 16
+    risks, dashboard with auto-calculated metrics and charts, a populated 5×5 heat
+    map and a detailed treatment plan. Alongside it, a one-page executive summary
+    in Word designed for board presentation — metric cards, top-five risks ranked
+    by residual score, phased budget and a specific recommendation to management.
+  </p>
+
+  <h2>What this demonstrates</h2>
+  <ul>
+    <li>I can quantify risk consistently using a documented methodology.</li>
+    <li>I understand inherent vs residual risk and what the gap says about control effectiveness.</li>
+    <li>I can communicate risk to two audiences — the technical register and the board summary.</li>
+    <li>I can walk through any of the 16 risks under interview probing in under three minutes.</li>
+  </ul>
+</Project>
