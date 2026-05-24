@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "GRC portfolio website — PayWave Solutions scenario (ISO 27001, cyber risk, TPRM).",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
