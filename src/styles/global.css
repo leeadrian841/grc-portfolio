@@ -62,6 +62,19 @@ html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
 }
+/* Scale the whole type system up on large monitors (e.g. 27").
+   rem-based sizes and the clamp() caps grow with the root font-size.
+   Laptops (≤1536px) are untouched. */
+@media (min-width: 1600px) {
+  :root {
+    font-size: 17px;
+  }
+}
+@media (min-width: 2000px) {
+  :root {
+    font-size: 18.5px;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
