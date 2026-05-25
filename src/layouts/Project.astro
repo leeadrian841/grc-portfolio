@@ -10,10 +10,12 @@ interface Props {
 }
 const { slug, title, description } = Astro.props;
 
-const idx = projects.findIndex((p) => p.slug === slug);
-const project = projects[idx];
-const prev = projects[(idx - 1 + projects.length) % projects.length];
-const next = projects[(idx + 1) % projects.length];
+const project = projects.find((p) => p.slug === slug)!;
+// prev/next cycle through completed projects only (in-progress ones have no page)
+const complete = projects.filter((p) => p.status === "complete");
+const ci = complete.findIndex((p) => p.slug === slug);
+const prev = complete[(ci - 1 + complete.length) % complete.length];
+const next = complete[(ci + 1) % complete.length];
 
 const kindLabel = (k: string) => (k === "xlsx" ? "Excel workbook" : "Word document");
 ---

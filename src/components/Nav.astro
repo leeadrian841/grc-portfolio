@@ -2,8 +2,8 @@
 import { site, url } from "../data/site";
 
 const links = [
+  { href: url("/#scenario"), label: "Scenario" },
   { href: url("/#projects"), label: "Projects" },
-  { href: url("/#scenario"), label: "The Scenario" },
   { href: url("/frameworks"), label: "Frameworks" },
   { href: url("/#contact"), label: "Contact" },
 ];
@@ -105,15 +105,17 @@ const links = [
   .nav__links a:hover {
     color: var(--navy);
   }
-  @media (max-width: 620px) {
+  /* On small screens keep the two most important links (Projects, Contact);
+     drop Scenario first, then Frameworks. */
+  @media (max-width: 640px) {
     .brand__role {
       display: none;
     }
-    .nav__links a:nth-child(2) {
+    .nav__links a:nth-child(1) {
       display: none;
     }
   }
-  @media (max-width: 440px) {
+  @media (max-width: 460px) {
     .nav__links {
       gap: 0.9rem;
     }

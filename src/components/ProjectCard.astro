@@ -6,39 +6,51 @@ interface Props {
   project: Project;
 }
 const { project } = Astro.props;
+const inProgress = project.status === "in-progress";
 const href = url(`/projects/${project.slug}`);
 ---
 
-<article class={`pcard pcard--${project.accent} reveal`}>
-  <a class="pcard__link" href={href} aria-label={project.title}></a>
+<article class={`pcard pcard--${project.accent} ${inProgress ? "pcard--soon" : ""} reveal`}>
+  {!inProgress && <a class="pcard__link" href={href} aria-label={project.title} />}
   <div class="pcard__head">
     <span class="pcard__num">{project.num}</span>
-    <span class="pcard__kicker">{project.kicker}</span>
+    <div class="pcard__tags">
+      {inProgress && <span class="pcard__status">In progress</span>}
+      <span class="pcard__kicker">{project.kicker}</span>
+    </div>
   </div>
   <h3 class="pcard__title">{project.title}</h3>
   <p class="pcard__blurb">{project.blurb}</p>
 
-  <dl class="pcard__metrics">
-    {
-      project.metrics.map((m) => (
-        <div>
-          <dt>{m.value}</dt>
-          <dd>{m.label}</dd>
-        </div>
-      ))
-    }
-  </dl>
+  {
+    !inProgress && project.metrics.length > 0 && (
+      <dl class="pcard__metrics">
+        {project.metrics.map((m) => (
+          <div>
+            <dt>{m.value}</dt>
+            <dd>{m.label}</dd>
+          </div>
+        ))}
+      </dl>
+    )
+  }
 
   <div class="cite-row pcard__cites">
     {project.clauses.slice(0, 4).map((c) => <span class="cite">{c}</span>)}
   </div>
 
-  <span class="pcard__more">
-    Read the approach
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-    </svg>
-  </span>
+  {
+    inProgress ? (
+      <span class="pcard__more pcard__more--soon">Planned — coming soon</span>
+    ) : (
+      <span class="pcard__more">
+        Read the approach
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </span>
+    )
+  }
 </article>
 
 <style>
@@ -71,6 +83,19 @@ const href = url(`/projects/${project.slug}`);
     transform: translateY(-4px);
     box-shadow: var(--shadow-lift);
   }
+  /* in-progress variant */
+  .pcard--soon {
+    border-top-style: dashed;
+    border-top-color: var(--line-strong);
+    background: color-mix(in srgb, var(--paper) 55%, var(--card));
+  }
+  .pcard--soon:hover {
+    transform: none;
+    box-shadow: var(--shadow);
+  }
+  .pcard--soon .pcard__num {
+    color: var(--ink-mute);
+  }
   .pcard__link {
     position: absolute;
     inset: 0;
@@ -81,6 +106,34 @@ const href = url(`/projects/${project.slug}`);
     align-items: baseline;
     justify-content: space-between;
     gap: 1rem;
+  }
+  .pcard__tags {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.45rem;
+  }
+  .pcard__status {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    background: color-mix(in srgb, var(--ink-mute) 12%, transparent);
+    border: 1px solid var(--line-strong);
+    padding: 0.25em 0.6em;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    white-space: nowrap;
+  }
+  .pcard__status::before {
+    content: "";
+    width: 0.45em;
+    height: 0.45em;
+    border-radius: 50%;
+    background: var(--risk-medium);
   }
   .pcard__num {
     font-family: var(--display);
@@ -145,5 +198,12 @@ const href = url(`/projects/${project.slug}`);
   }
   .pcard:hover .pcard__more svg {
     transform: translateX(4px);
+  }
+  .pcard__more--soon {
+    color: var(--ink-mute);
+    font-weight: 500;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
   }
 </style>
