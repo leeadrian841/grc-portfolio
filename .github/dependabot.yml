@@ -16,10 +16,10 @@ updates:
       include: scope
     groups:
       # Bundle non-major updates into a single PR to cut review noise.
-      minor-and-patch:
+      all-dependencies:
         update-types:
-          - minor
-          - patch
+          - "minor"
+          - "patch"
 
   # GitHub Actions used in the deploy workflow
   - package-ecosystem: github-actions
