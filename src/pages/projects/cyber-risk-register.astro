@@ -53,23 +53,27 @@ import Project from "../../layouts/Project.astro";
     For each risk I decomposed it into threat source, threat action, vulnerability
     and asset at risk. This is what separates a professional register from a
     brainstormed list of concerns. The vulnerability column references findings
-    from my gap analysis directly — so the artefacts cross-reference each other.
+    from my gap analysis directly so the artefacts cross-reference each other.
   </p>
 
   <h3>Inherent vs residual scoring</h3>
   <p>
     Scoring was formula-driven. I calculated both inherent risk (without controls)
     and residual risk (with existing controls). The gap between the two reveals
-    how effective current controls actually are.
+    how effective the current controls actually are.
   </p>
   <div class="callout">
     <span class="section-mark">A worked example</span>
     <p>
       <strong>CRR-002 (ransomware)</strong> has inherent score 20 and residual
-      score 20 — telling me the controls are barely moving the needle.
+      score 20. This tells me that the controls are barely moving the needle.
+    </p>
+    <p>
       <strong>CRR-001 (privileged access abuse)</strong> drops from inherent 20 to
-      residual 12 — controls help, but are insufficient. That delta is the
-      conversation I want to have with management.
+      residual 12. The controls help but are insufficient to reduce the risks.
+    </p>
+    <p>
+      That delta is the conversation I want to have with the management.
     </p>
   </div>
 
