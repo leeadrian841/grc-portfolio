@@ -27,6 +27,16 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {/* Content-Security-Policy — production only, so dev HMR/toolbar are unaffected.
+        GitHub Pages can't set HTTP headers, so this is delivered via <meta>.
+        Note: frame-ancestors / X-Frame-Options are ignored when delivered via
+        <meta>; clickjacking protection requires a host that sets real headers. */}
+    {import.meta.env.PROD && (
+      <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self'; base-uri 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; object-src 'none'; form-action 'none'; upgrade-insecure-requests"
+      />
+    )}
     <title>{pageTitle}</title>
     <meta name="description" content={pageDesc} />
     <link rel="canonical" href={canonical} />
@@ -50,25 +60,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     </main>
     <Footer />
 
-    <script>
-      const els = document.querySelectorAll(".reveal");
-      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && els.length) {
-        const io = new IntersectionObserver(
-          (entries) => {
-            for (const e of entries) {
-              if (e.isIntersecting) {
-                e.target.classList.add("is-in");
-                io.unobserve(e.target);
-              }
-            }
-          },
-          { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
-        );
-        els.forEach((el) => io.observe(el));
-      } else {
-        els.forEach((el) => el.classList.add("is-in"));
-      }
-    </script>
+    {/* Served from a static file (script-src 'self') rather than inlined, so a
+        strict CSP needs no per-build hash. is:inline keeps Astro from bundling it. */}
+    <script is:inline src={url("/scripts/reveal.js")}></script>
 
     <style>
       .skip {
