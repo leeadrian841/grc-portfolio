@@ -27,7 +27,7 @@ const contacts = [
 ].filter(Boolean) as { label: string; href: string; icon: string; external: boolean }[];
 ---
 
-<Base>
+<Base footerFlush>
   <!-- ============================ HERO ============================ -->
   <section class="hero">
     <div class="wrap hero__inner">
@@ -404,7 +404,9 @@ const contacts = [
 
   /* ---- cta ---- */
   .sec--cta {
-    background: color-mix(in srgb, var(--navy) 4%, transparent);
+    /* Match the footer tint exactly so the contact section and footer read as
+       one cohesive block (the footer is rendered flush — see footerFlush). */
+    background: color-mix(in srgb, var(--navy) 4%, var(--paper));
     border-top: 1px solid var(--line);
   }
   .cta {

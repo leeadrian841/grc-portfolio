@@ -14,9 +14,12 @@ import { site, url } from "../data/site";
 interface Props {
   title?: string;
   description?: string;
+  // Render the footer flush against the last section (no top margin) when that
+  // section already provides its own background/spacing — e.g. the homepage CTA.
+  footerFlush?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, footerFlush = false } = Astro.props;
 const pageTitle = title ? `${title} · ${site.title}` : `${site.name} — ${site.title}`;
 const pageDesc = description ?? site.description;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
@@ -58,7 +61,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <main id="main">
       <slot />
     </main>
-    <Footer />
+    <Footer flush={footerFlush} />
 
     {/* Served from a static file (script-src 'self') rather than inlined, so a
         strict CSP needs no per-build hash. is:inline keeps Astro from bundling it. */}

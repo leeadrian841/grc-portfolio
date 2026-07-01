@@ -1,6 +1,14 @@
 ---
 import { site, url } from "../data/site";
 
+interface Props {
+  // When the preceding section already provides its own background + spacing
+  // (e.g. the homepage contact CTA), render the footer flush against it so
+  // there's no awkward strip of bare paper between the two.
+  flush?: boolean;
+}
+const { flush = false } = Astro.props;
+
 const year = new Date().getFullYear();
 const contacts = [
   site.github ? { label: "GitHub", href: site.github } : null,
@@ -9,7 +17,7 @@ const contacts = [
 ].filter(Boolean) as { label: string; href: string }[];
 ---
 
-<footer class="foot">
+<footer class:list={["foot", { "foot--flush": flush }]}>
   <div class="wrap foot__inner">
     <div class="foot__brand">
       <p class="foot__name">{site.name}</p>
@@ -36,6 +44,11 @@ const contacts = [
     border-top: 1px solid var(--line);
     background: color-mix(in srgb, var(--navy) 4%, var(--paper));
     padding-block: clamp(2.5rem, 5vw, 3.5rem);
+  }
+  /* Flush against a preceding section that supplies its own spacing/background.
+     Higher specificity than `.foot` so it wins regardless of source order. */
+  .foot.foot--flush {
+    margin-top: 0;
   }
   .foot__inner {
     display: flex;
