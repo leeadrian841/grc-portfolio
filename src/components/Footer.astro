@@ -17,17 +17,14 @@ const contacts = [
     </div>
     <nav class="foot__links" aria-label="Footer">
       <a href={url("/")}>Home</a>
-      <a href={url("/frameworks")}>Framework Reference</a>
+      <a href={url("/frameworks")}>Frameworks</a>
       {contacts.map((c) => <a href={c.href}>{c.label}</a>)}
     </nav>
   </div>
   <div class="wrap foot__fine">
     <p>
-      PayWave Solutions Pte. Ltd., DataPulse Analytics and SwiftDesk Solutions are
-      fictional entities created for this portfolio. All findings, costs and
-      assessments are illustrative. Referenced frameworks (ISO&nbsp;27001,
-      NIST&nbsp;CSF, MAS&nbsp;TRM, PDPA, PCI&nbsp;DSS) are real and publicly
-      accessible.
+      PayWave Solutions Pte. Ltd., DataPulse Analytics and SwiftDesk Solutions are fictional entities created for this portfolio. All findings, costs and assessments are illustrative.
+      Referenced frameworks (ISO&nbsp;27001, NIST&nbsp;CSF, MAS&nbsp;TRM, PDPA, PCI&nbsp;DSS) are real and publicly accessible.
     </p>
     <p class="foot__copy">© {year} {site.name}. Built with Astro.</p>
   </div>
